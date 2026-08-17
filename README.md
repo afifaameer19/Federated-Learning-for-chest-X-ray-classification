@@ -7,3 +7,7 @@ Heterogeneity of data and devices: Clients in a federated learning network can v
 
 # Hypothesis
 As client data become increasingly heterogeneous, the performance of standard FedAvg will decrease compared with centralized training.
+
+#dataset
+NIH Chest X-rays
+Over 112,000 Chest X-ray images from more than 30,000 unique patients
