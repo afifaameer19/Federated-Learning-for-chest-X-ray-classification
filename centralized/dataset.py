@@ -17,9 +17,6 @@ def get_datasets(
     train_dir = f"{data_dir}/train"
     test_dir = f"{data_dir}/test"
 
-    # ============================================================
-    # TRAIN
-    # ============================================================
 
     train_ds = tf.keras.utils.image_dataset_from_directory(
         train_dir,
@@ -32,9 +29,6 @@ def get_datasets(
         shuffle=True,
     )
 
-    # ============================================================
-    # VALIDATION
-    # ============================================================
 
     val_ds = tf.keras.utils.image_dataset_from_directory(
         train_dir,
@@ -47,9 +41,7 @@ def get_datasets(
         shuffle=False,
     )
 
-    # ============================================================
-    # TEST
-    # ============================================================
+
 
     test_ds = tf.keras.utils.image_dataset_from_directory(
         test_dir,
@@ -62,10 +54,6 @@ def get_datasets(
     class_names = train_ds.class_names
 
     print("\nClasses:", class_names)
-
-    # ============================================================
-    # DATA AUGMENTATION
-    # ============================================================
 
     augmentation = tf.keras.Sequential(
         [
@@ -106,9 +94,6 @@ def get_datasets(
         num_parallel_calls=tf.data.AUTOTUNE
     )
 
-    # ============================================================
-    # PERFORMANCE
-    # ============================================================
 
     train_ds = train_ds.prefetch(
         tf.data.AUTOTUNE
