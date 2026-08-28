@@ -15,9 +15,6 @@ from sklearn.metrics import (
 from utils import save_metrics
 
 
-# ============================================================
-# CONFIG
-# ============================================================
 
 DATA_DIR = "/content/data"
 
@@ -39,9 +36,6 @@ BATCH_SIZE = 32
 THRESHOLD = 0.5
 
 
-# ============================================================
-# LOAD IMAGE
-# ============================================================
 
 def load_image(path):
     """
@@ -74,9 +68,7 @@ def load_image(path):
     return image
 
 
-# ============================================================
-# RESOLVE IMAGE PATH
-# ============================================================
+
 
 def get_image_path(filepath):
     """
@@ -86,14 +78,7 @@ def get_image_path(filepath):
 
     filepath = str(filepath).replace("\\", "/")
 
-    # Example CSV path:
-    #
-    # /root/.cache/kagglehub/.../versions/1/train/NORMAL/a.jpeg
-    #
-    # We only need:
-    #
-    # train/NORMAL/a.jpeg
-
+ 
     if "/versions/1/" in filepath:
 
         relative_path = filepath.split(
@@ -106,8 +91,8 @@ def get_image_path(filepath):
             relative_path,
         )
 
-    # If CSV already contains:
-    # train/NORMAL/image.jpeg
+ 
+
 
     if filepath.startswith("train/"):
         return os.path.join(
@@ -115,8 +100,7 @@ def get_image_path(filepath):
             filepath,
         )
 
-    # If CSV contains:
-    # val/NORMAL/image.jpeg
+ 
 
     if filepath.startswith("val/"):
         return os.path.join(
@@ -124,7 +108,7 @@ def get_image_path(filepath):
             filepath,
         )
 
-    # If it already contains /content/data
+ 
 
     if filepath.startswith(DATA_DIR):
         return filepath
@@ -134,9 +118,7 @@ def get_image_path(filepath):
     )
 
 
-# ============================================================
-# CREATE GLOBAL TEST DATASET
-# ============================================================
+
 
 def create_global_test_dataset(df):
 
@@ -205,9 +187,7 @@ def create_global_test_dataset(df):
     return dataset
 
 
-# ============================================================
-# MAIN
-# ============================================================
+
 
 def main():
 
@@ -215,9 +195,7 @@ def main():
     print(" CENTRALIZED GLOBAL TEST EVALUATION")
     print("======================================")
 
-    # --------------------------------------------------------
-    # 1. Load global_test.csv
-    # --------------------------------------------------------
+   
 
     print(
         f"\nLoading:\n{GLOBAL_TEST_CSV}"
@@ -239,9 +217,7 @@ def main():
         df.columns.tolist()
     )
 
-    # --------------------------------------------------------
-    # 2. Check classes
-    # --------------------------------------------------------
+ 
 
     print(
         "\nClass distribution:"
@@ -251,17 +227,12 @@ def main():
         df["class_name"].value_counts()
     )
 
-    # --------------------------------------------------------
-    # 3. Create dataset
-    # --------------------------------------------------------
+
 
     test_ds = create_global_test_dataset(
         df
     )
 
-    # --------------------------------------------------------
-    # 4. Load trained model
-    # --------------------------------------------------------
 
     print(
         "\nLoading model:"
@@ -279,9 +250,7 @@ def main():
         "Model loaded successfully."
     )
 
-    # --------------------------------------------------------
-    # 5. Generate predictions
-    # --------------------------------------------------------
+  
 
     print(
         "\nGenerating predictions..."
@@ -315,17 +284,13 @@ def main():
         dtype=np.float32,
     )
 
-    # --------------------------------------------------------
-    # 6. Convert probabilities to predictions
-    # --------------------------------------------------------
+  
 
     all_predictions = (
         all_probs >= THRESHOLD
     ).astype(np.int32)
 
-    # --------------------------------------------------------
-    # 7. Calculate metrics
-    # --------------------------------------------------------
+  
 
     accuracy = accuracy_score(
         all_labels,
@@ -360,9 +325,7 @@ def main():
         all_predictions,
     )
 
-    # --------------------------------------------------------
-    # 8. Print results
-    # --------------------------------------------------------
+  
 
     print("\n======================================")
     print(" GLOBAL TEST RESULTS")
@@ -402,9 +365,7 @@ def main():
 
     print(cm)
 
-    # --------------------------------------------------------
-    # 9. Save metrics
-    # --------------------------------------------------------
+
 
     metrics = {
         "accuracy": float(accuracy),
@@ -444,9 +405,6 @@ def main():
     )
 
 
-# ============================================================
-# RUN
-# ============================================================
 
 if __name__ == "__main__":
     main()
