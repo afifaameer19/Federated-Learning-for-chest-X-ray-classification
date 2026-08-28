@@ -22,17 +22,12 @@ def get_model(
         name="image"
     )
 
-    # ============================================================
-    # DENSENET PREPROCESSING
-    # ============================================================
+ 
 
     x = tf.keras.applications.densenet.preprocess_input(
         inputs
     )
 
-    # ============================================================
-    # DENSENET121 BACKBONE
-    # ============================================================
 
     base = DenseNet121(
         include_top=False,
@@ -43,9 +38,7 @@ def get_model(
 
     base.trainable = False
 
-    # ============================================================
-    # CLASSIFICATION HEAD
-    # ============================================================
+   
 
     x = base.output
 
